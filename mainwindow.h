@@ -24,5 +24,6 @@ private slots:
     void on_pushButton_clicked();
     void on_pb_supprimer_clicked();
     void on_modifier_clicked();
+    void on_linecomboBox_currentIndexChanged(const QString &x); //TRIER COMBOBOX
 };
 #endif // MAINWINDOW_H

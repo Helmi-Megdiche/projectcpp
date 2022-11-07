@@ -21,6 +21,17 @@ MainWindow::MainWindow(QWidget *parent)
 {
 
     ui->setupUi(this);
+
+    QPixmap pix1("C:/Users/helmi/Desktop/PROJET_HELMI/GESTION_PERSONNEL/Background/Backg.jpg") ;
+    ui->background->setPixmap(pix1);
+
+    QPixmap pix2("C:/Users/helmi/Desktop/PROJET_HELMI/GESTION_PERSONNEL/Logo/Logo1.jpg") ;
+    ui->logo1->setPixmap(pix2);
+
+    ui->num_tel->setValidator(new QIntValidator(0, 99999999, this));
+    ui->num_tel2->setValidator(new QIntValidator(0, 99999999, this));
+
+
     Connection c1;
     c1.createconnect();
 
@@ -42,7 +53,7 @@ void MainWindow::on_pushButton_Ajouter_clicked()
     QString ID_personnel=ui->lineEdit_ID_AVION->text();
 
 
-    QString Num_Tel=ui->lineEdit_ETAT->text();
+    QString Num_Tel=ui->num_tel2->text();
     QString Nom=ui->lineEdit_CAPACITE->text();
     QString Prenom=ui->lineEdit_TYPE->text();
 
@@ -98,7 +109,7 @@ void MainWindow::on_modifier_clicked()
 
       QString type=ui->lineEdit_type->text();
      QString capacite=ui->lineEdit_capacite->text();
-     QString etat =ui->lineEdit_etat->text();
+     QString etat =ui->num_tel->text();
       QString idavion=ui->lineEdit_ID_AVION_2->text();
 
         query.prepare("UPDATE PERSONEL SET Prenom='"+type+"',Nom='"+capacite+"',Num_Tel='"+etat+"'WHERE ID_personnel=:ID_personnel");
@@ -121,6 +132,61 @@ void MainWindow::on_modifier_clicked()
           }
 
 
-
-
 }
+
+
+
+
+void MainWindow::on_linecomboBox_currentIndexChanged(const QString &x)
+{
+    QString val = ui->linecomboBox->currentText();
+    if (val == "ID_personnel (croissant)")
+    {
+        QSqlQueryModel * model = new QSqlQueryModel();
+        model->setQuery("Select * from PERSONEL ORDER BY ID_PERSONNEL ASC");
+        ui->tab_av->setModel(model);
+    }
+    else if (val == "Nom (croissant)")
+    {
+        QSqlQueryModel * model = new QSqlQueryModel();
+        model->setQuery("Select * from PERSONEL ORDER BY Nom ASC");
+        ui->tab_av->setModel(model);
+    }
+    else if (val == "Prenom (croissant)")
+    {
+        QSqlQueryModel * model = new QSqlQueryModel();
+        model->setQuery("Select * from PERSONEL ORDER BY PRENOM ASC");
+        ui->tab_av->setModel(model);
+    }
+    else if (val == "Num_Tel (croissant)")
+    {
+        QSqlQueryModel * model = new QSqlQueryModel();
+        model->setQuery("Select * from PERSONEL ORDER BY NUM_TEL ASC");
+        ui->tab_av->setModel(model);
+    }
+    else if (val == "ID_personnel (decroissant)")
+    {
+        QSqlQueryModel * model = new QSqlQueryModel();
+        model->setQuery("Select * from PERSONEL ORDER BY ID_PERSONNEL DESC");
+        ui->tab_av->setModel(model);
+    }
+    else if (val == "Nom (decroissant)")
+    {
+        QSqlQueryModel * model = new QSqlQueryModel();
+        model->setQuery("Select * from PERSONEL ORDER BY NOM DESC");
+        ui->tab_av->setModel(model);
+    }
+    else if (val == "Prenom (decroissant)")
+    {
+        QSqlQueryModel * model = new QSqlQueryModel();
+        model->setQuery("Select * from PERSONEL ORDER BY PRENOM DESC");
+        ui->tab_av->setModel(model);
+    }
+    else if (val == "Num_Tel (decroissant)")
+    {
+        QSqlQueryModel * model = new QSqlQueryModel();
+        model->setQuery("Select * from PERSONEL ORDER BY NUM_TEL DESC");
+        ui->tab_av->setModel(model);
+    }
+}
+

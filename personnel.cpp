@@ -41,7 +41,7 @@ model->setQuery("select * from PERSONEL");
 model->setHeaderData(0,Qt::Horizontal,QObject::tr("ID_PERSONNEL"));
 model->setHeaderData(1,Qt::Horizontal,QObject::tr("PRENOM"));
 model->setHeaderData(2,Qt::Horizontal,QObject::tr("NOM"));
-model->setHeaderData(0,Qt::Horizontal,QObject::tr("NUM_TEL"));
+model->setHeaderData(3,Qt::Horizontal,QObject::tr("NUM_TEL"));
 
 return model;
 
@@ -52,12 +52,13 @@ QSqlQuery query;
 query.prepare("Delete from PERSONEL where ID_PERSONNEL=:ID_PERSONNEL");
 query.bindValue(":ID_PERSONNEL",ID_personnel);
 return  query.exec();
+
+
 }
 bool personnel::modifierav()
 
 {
 QSqlQuery query;
-QString up=QString(ID_personnel);
 
 //preparation de la requette
 
