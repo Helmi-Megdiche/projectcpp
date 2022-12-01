@@ -1,0 +1,25 @@
+<RCC>
+    <qresource prefix="/new/prefix1">
+        <file>Bottons/Ajouter.png</file>
+        <file>Bottons/Afficher.png</file>
+        <file>Bottons/Annuler.png</file>
+        <file>Bottons/Enregistrer.png</file>
+        <file>Bottons/Modifier.png</file>
+        <file>Bottons/Pdf.png</file>
+        <file>Bottons/Rechercher.png</file>
+        <file>Bottons/Recommendation.png</file>
+        <file>Bottons/Retour.png</file>
+        <file>Bottons/Statistiques.png</file>
+        <file>Bottons/Supprimer.png</file>
+        <file>Bottons/images.jfif</file>
+        <file>Bottons/map.jpg</file>
+        <file>Bottons/chat.webp</file>
+        <file>Bottons/map.webp</file>
+        <file>Bottons/afficher.jfif</file>
+        <file>Bottons/ajouter.jfif</file>
+        <file>Bottons/chercher.webp</file>
+        <file>Bottons/delete.png</file>
+        <file>Bottons/pdf.jpg</file>
+        <file>Bottons/stat.jpg</file>
+    </qresource>
+</RCC>
