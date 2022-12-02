@@ -1,0 +1,17 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Afficher.png</file>
+        <file>Ajouter.png</file>
+        <file>Annuler.png</file>
+        <file>botons.qrc</file>
+        <file>Enregistrer.png</file>
+        <file>imprimer.png</file>
+        <file>Modifier.png</file>
+        <file>Pdf.png</file>
+        <file>Rechercher.png</file>
+        <file>Recommendation.png</file>
+        <file>Retour.png</file>
+        <file>Statistiques.png</file>
+        <file>Supprimer.png</file>
+    </qresource>
+</RCC>

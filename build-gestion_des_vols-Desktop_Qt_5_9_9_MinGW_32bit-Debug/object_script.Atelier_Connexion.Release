@@ -1,0 +1,12 @@
+INPUT(
+./release\arduino.o
+./release\login.o
+./release\loginn.o
+./release\main.o
+./release\mainwindow.o
+./release\connexion.o
+./release\vol.o
+./release\qrc_bottons.o
+./release\moc_login.o
+./release\moc_mainwindow.o
+);
