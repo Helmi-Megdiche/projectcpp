@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "personnel.h"
+#include "arduino.h"
 #include <QMessageBox>
 #include <QIntValidator>
 #include<QPdfWriter>
@@ -54,6 +55,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->background5->setPixmap(pix7);
     QPixmap pix8("C:/Users/helmi/Desktop/PROJET_HELMI/GESTION_PERSONNEL/Background/Backg.jpg") ;
     ui->background6->setPixmap(pix8);
+    QPixmap pix9("C:/Users/helmi/Desktop/PROJET_HELMI/GESTION_PERSONNEL/Background/Backg.jpg") ;
+    ui->background7->setPixmap(pix9);
 
 
     QPixmap pix2("C:/Users/helmi/Desktop/PROJET_HELMI/GESTION_PERSONNEL/Logo/Logo1.png") ;
@@ -72,6 +75,17 @@ MainWindow::MainWindow(QWidget *parent)
    // ui->lineEdit_ETAT->setValidator(new QIntValidator(0, 1, this));
     ui->tab_af->setModel(a.afficher());
 
+
+    //arduino
+        int ret=A.connect_arduino();
+        switch(ret) {
+        case(0):qDebug() <<"arduino is available and connected to : " << A.getarduino_port_name();
+            break;
+        case(1):qDebug() <<"arduino is available but not connected to : " << A.getarduino_port_name();
+            break;
+        case(-1):qDebug() << "arduino is not available";
+        }
+        QObject::connect(A.getserial(),SIGNAL(readyRead()),this,SLOT(update_label()));
 }
 
 MainWindow::~MainWindow()
@@ -372,6 +386,21 @@ void MainWindow::on_pushButton_STSAT_clicked()
                slice4->setLabelVisible();
                slice4->setPen(QPen(Qt::blue, 2));
                slice4->setBrush(Qt::cyan);
+
+               QPieSlice *slice5 = series->slices().at(5);
+               slice5->setExploded();
+               slice5->setLabelVisible();
+               slice5->setPen(QPen(Qt::white, 2));
+               slice5->setBrush(Qt::white);
+
+
+               QPieSlice *slice6 = series->slices().at(6);
+               slice6->setExploded();
+               slice6->setLabelVisible();
+               slice6->setPen(QPen(Qt::black, 2));
+               slice6->setBrush(Qt::black);
+
+
                QChart *chart = new QChart();
                chart->addSeries(series);
                chart->setTitle("MOST PERSONNEL SAVED");
@@ -530,3 +559,75 @@ void MainWindow::on_pushButton_mail_clicked()
                                 QObject::tr("mail sent Successfuly.\n"
                                             "Click Cancel to exit."), QMessageBox::Cancel);
 }
+
+void MainWindow::on_ajout_arduino_clicked()
+{
+    QString idaa= ui->id_arduino->text();
+    QString nomaa= ui->nom_arduino->text();
+    QString prenomaa= ui->prenom_arduino->text() ;
+    int soldeaa= ui->solde_arduino->text().toInt() ;
+
+    ard a1(idaa,nomaa,prenomaa,soldeaa) ;
+
+
+    bool test = a1.ajouter_arduino();
+        if (test)
+        {
+            QMessageBox::information(nullptr,QObject::tr("OK"),
+                                     QObject::tr("Ajout effectué \n" "Click cancel to exit."),QMessageBox::Cancel);
+        }
+        else
+            QMessageBox::critical(nullptr,QObject::tr("NOT OK"),
+                                     QObject::tr("Ajout non effectué \n" "Click cancel to exit."),QMessageBox::Cancel);
+}
+
+void MainWindow::on_effacer_arduino_clicked()
+{
+    ui->id_arduino->clear();
+    ui->nom_arduino->clear() ;
+    ui->prenom_arduino->clear() ;
+    ui->solde_arduino->clear() ;
+}
+
+
+void MainWindow::on_modifier_arduino_clicked()
+{
+    int soldeaa=ui->solde_arduino->text().toInt();
+    QString nomaa=ui->nom_arduino->text();
+    QString prenomaa=ui->prenom_arduino->text();
+    QString idaa=ui->id_arduino->text();
+    ard a1(idaa,nomaa,prenomaa,soldeaa) ;
+    bool test =a1.modifier_arduino();
+    if (test)
+    {
+        QMessageBox::information(nullptr,QObject::tr("OK"),
+                                 QObject::tr("mise à jour effectué \n" "Click cancel to exit."),QMessageBox::Cancel);
+    }
+    else
+        QMessageBox::critical(nullptr,QObject::tr("NOT OK"),
+                                 QObject::tr("mise à jour non effectué \n" "Click cancel to exit."),QMessageBox::Cancel);
+
+
+}
+
+void MainWindow::update_label()
+{
+
+    data=A.read_from_arduino();
+    QByteArray text=QByteArray::fromHex(data);
+    QSqlQuery qry;
+    serialBuffer +=QString::fromStdString(data.toStdString());
+
+
+    if( qry.exec("select ID from RFID where ID like '"+serialBuffer+"%'"))
+    {
+        int count =0;
+        while(qry.next())
+        {count++;}
+ if (count==1){
+        A.write_to_arduino("1");}
+ else {A.write_to_arduino("0");
+    }
+}}
+
+

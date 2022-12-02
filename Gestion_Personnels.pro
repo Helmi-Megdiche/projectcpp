@@ -3,6 +3,8 @@ QT += core gui printsupport
 QT+=sql
 QT += core gui charts
 QT += core gui charts network
+QT += serialport
+QT += core
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++11
@@ -22,6 +24,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 QT +=sql
 
 SOURCES += \
+    arduino.cpp \
     connection.cpp \
     mail.cpp \
     main.cpp \
@@ -29,6 +32,7 @@ SOURCES += \
     personnel.cpp
 
 HEADERS += \
+    arduino.h \
     connection.h \
     mail.h \
     mainwindow.h \

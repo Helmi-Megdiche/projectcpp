@@ -13,6 +13,7 @@
 #include <QtCharts/QLineSeries>
 #include <QPrinter>
 #include <QPrintDialog>
+#include "arduino.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -30,6 +31,10 @@ public:
 private:
     Ui::MainWindow *ui;
     personnel a;
+    ard a1;
+    QString serialBuffer;
+    QByteArray data;
+    Arduino A;
 private slots:
     void on_pushButton_Ajouter_clicked();
     void on_pushButton_clicked();
@@ -46,7 +51,15 @@ private slots:
     void on_pushButton_5_clicked();
     void on_pushButton_9_clicked();
     void on_pushButton_10_clicked();
-    void on_pushButton_2_clicked();
+
     void on_pushButton_mail_clicked();
+    void on_ajout_arduino_clicked();
+
+        void on_effacer_arduino_clicked();
+
+        void on_modifier_arduino_clicked();
+
+        void update_label();
+        void on_pushButton_2_clicked();
 };
 #endif // MAINWINDOW_H
